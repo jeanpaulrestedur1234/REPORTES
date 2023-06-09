@@ -1,0 +1,149 @@
+# This file contains some configs for the program 
+# Path where six_min files are stored
+sixmin_folder_path: "C:\\Users\\marcha\\Desktop\\PACIENTES\\PACIENTES VAR_6_MINS"
+# Filenames exported from Smart Analyzer
+Filenames:
+    Kinematics: angles.emt
+    Kinetics:
+      Force: forces.emt
+      Torque: torques.emt 
+      Power: power.emt
+
+# Headers of the kinematics and kinetics datasets and their translation into Spanish. 
+Headers: 
+  Kinematics:
+    #Sagittal
+    acRSPFE: Tronco Derecho Flexo-Extensión
+    acLSPFE: Tronco Izquierdo Flexo-Extensión
+    acRSHTILT: Hombros Derecho Inclincación
+    acLSHTILT: Hombros Izquierdo Inclincación
+    acRSHTILTOFF: Hombros Derecho Inclincación Relativa
+    acLSHTILTOFF: Hombros Izquierdo Inclincación Relativa
+    acRPTILT: Pelvis Derecha Inclinación
+    acLPTILT: Pelvis Izquierda Inclinación
+    acRHPFE: Cadera Derecha Flexo-Extensión
+    acLHPFE: Cadera Izquierda Flexo-Extensión
+    acRKFE: Rodilla Derecha Flexo-Extensión
+    acLKFE: Rodilla Izquierda Flexo-Extensión
+    acRAFE: Tobillo Derecho Flexo-Extensión
+    acLAFE: Tobillo Izquierdo Flexo-Extensión
+    #Coronal
+    acRSPML: Tronco Derecho Medio-Lateral
+    acLSPML: Tronco Izquierdo Medio-Lateral
+    acLSHOBLI: Hombros Derecho Oblicuidad
+    acRSHOBLI: Hombros Izquierdo Oblicuidad
+    acRSHOBLIOFF: Hombros Derecho Oblicuidad Relativa
+    acLSHOBLIOFF: Hombros Izquierdo Oblicuidad Relativa
+    acRPOBLI: Pelvis Derecha Oblicuidad
+    acLPOBLI: Pelvis Izquierda Oblicuidad
+    acRHPAA: Cadera Derecha Add-Abd
+    acLHPAA: Cadera Izquierda Add-Abd
+    acRKAA: Rodilla Derecha Add-Abd
+    acLKAA: Rodilla Izquierda Add-Abd
+    acRFAA: Pie Derecho Add-Abd
+    acLFAA: Pie Izquierdo Add-Abd
+    acRTRT: Tronco Derecho RT
+    acRTOBL: Tronco Derecho oblicuidad
+    acRTROT: Tronco Derecho ROT
+    acLTRT: Tronco Izquierdo RT
+    acLTOBL: Tronco Izquierdo oblicuidad
+    acLTROT: Tronco Izquierdo ROT
+   
+    
+    #Transverse
+    acRPROT: Pelvis Derecha Rotación
+    acLPROT: Pelvis Izquierda Rotación
+    acRHPIE: Cadera Derecha Interna-Externa
+    acLHPIE: Cadera Izquierda Interna-Externa
+    acRKIE: Rodilla Derecha Interna-Externa
+    acLKIE: Rodilla Izquierda Interna-Externa
+    acRAIE: Tobillo Derecho Interno-Externo
+    acLAIE: Tobillo Izquierdo Interno-Externo
+    acRSPIE: Tronco Derecho Interno-Externo
+    acLSPIE: Tronco Izquierdo Interno-Externo
+    acRSHROT: Hombros Derecho Rotación
+    acLSHROT: Hombros Izquierdo Rotación
+    acRSHROTOFF: Hombros Derecho Rotación Relativa
+    acLSHROTOFF: Hombros Izquierdo Rotación Relativa
+    acRFIE: Pie Derecho Interno-Externo
+    acLFIE: Pie Izquierdo Interno-Externo
+  Kinetics: 
+    Force:
+      #Sagittal
+      fcRHPFE: Fuerza de Flex-Ext Cadera Derecha
+      fcLHPFE: Fuerza de Flex-Ext Cadera Izquierda
+      fcRKFE: Fuerza de Flex-Ext Rodilla Derecha
+      fcLKFE: Fuerza de Flex-Ext Rodilla Izquierda
+      fcRAFE: Fuerza de Flex-Ext Tobillo Derecho
+      fcLAFE: Fuerza de Flex-Ext Tobillo Derecho
+      #Coronal
+      fcRHPAA: Fuerza de Add-Abd Cadera Derecha
+      fcLHPAA: Fuerza de Add-Abd Cadera Izquierda
+      fcRKAA: Fuerza de Valgo-Varo Rodilla Derecha
+      fcLKAA: Fuerza de Valgo-Varo Rodilla Izquierda
+      fcRFAA: Fuerza de Add-Abd Pie Derecho
+      fcLFAA: Fuerza de Add-Abd Pie Izquierdo
+      #Transverse
+      fcRHPIE: Fuerza de Rotación Cadera Derecha
+      fcLHPIE: Fuerza de Rotación Cadera Izquierda
+      fcRKIE: Fuerza de Rotación Rodilla Derecha
+      fcLKIE: Fuerza de Rotación Rodilla Izquierda
+      fcRFIE: Fuerza de Rotación Pie Derecho
+      fcLFIE: Fuerza de Rotación Pie Izquierdo
+      #Ground forces
+      fcRGRVE: Fuerza de Reacción a Piso Vertical Derecha 
+      fcLGRVE: Fuerza de Reacción a Piso Vertical Izquierda
+      fcRGRML: Fuerza de Reacción a Piso Medio-Lateral Derecha
+      fcLGRML: Fuerza de Reacción a Piso Medio-Lateral Izquierda
+      fcRGRAP: Fuerza de Reacción a Piso Antero-Posterior Derecha
+      fcLGRAP: Fuerza de Reacción a Piso Antero-Posterior Izquierda
+    Torque:
+     #Sagittal
+      tcRHPFE: Torque de Flex-Ext Cadera Derecha
+      tcLHPFE: Torque de Flex-Ext Cadera Izquierda
+      tcRKFE: Torque de Flex-Ext Rodilla Derecha
+      tcLKFE: Torque de Flex-Ext Rodilla Izquierda
+      tcRAFE: Torque de Flex-Ext Tobillo Derecho
+      tcLAFE: Torque de Flex-Ext Tobillo Derecho
+      #Coronal
+      tcRHPAA: Torque de Add-Abd Cadera Derecha
+      tcLHPAA: Torque de Add-Abd Cadera Izquierda
+      tcRKAA: Torque de Valgo-Varo Rodilla Derecha
+      tcLKAA: Torque de Valgo-Varo Rodilla Izquierda
+      tcRFAA: Torque de Add-Abd Pie Derecho
+      tcLFAA: Torque de Add-Abd Pie Izquierdo
+      #Transverse
+      tcRHPIE: Torque de Rotación Cadera Derecha
+      tcLHPIE: Torque de Rotación Cadera Izquierda
+      tcRKIE: Torque de Rotación Rodilla Derecha
+      tcLKIE: Torque de Rotación Rodilla Izquierda
+      tcRFIE: Torque de Rotación Pie Derecho
+      tcLFIE: Torque de Rotación Pie Izquierdo
+      #Ground torques
+      tcRGRVE: Torque de Reacción a Piso Vertical Derecha 
+      tcLGRVE: Torque de Reacción a Piso Vertical Izquierda
+      tcRGRML: Torque de Reacción a Piso Medio-Lateral Derecha
+      tcLGRML: Torque de Reacción a Piso Medio-Lateral Izquierda
+      tcRGRAP: Torque de Reacción a Piso Antero-Posterior Derecha
+      tcLGRAP: Torque de Reacción a Piso Antero-Posterior Izquierda
+    Power:
+      pcRHPFE: Potencia de Flex-Ext Cadera Derecha
+      pcLHPFE: Potencia de Flex-Ext Cadera Izquierda
+      pcRKFE: Potencia de Flex-Ext Rodilla Derecha
+      pcLKFE: Potencia de Flex-Ext Rodilla Izquierda
+      pcRAFE: Potencia de Flex-Ext Tobillo Derecho
+      pcLAFE: Potencia de Flex-Ext Tobillo Derecho
+      #Coronal
+      pcRHPAA: Potencia de Add-Abd Cadera Derecha
+      pcLHPAA: Potencia de Add-Abd Cadera Izquierda
+      pcRKAA: Potencia de Valgo-Varo Rodilla Derecha
+      pcLKAA: Potencia de Valgo-Varo Rodilla Izquierda
+      pcRFAA: Potencia de Add-Abd Pie Derecho
+      pcLFAA: Potencia de Add-Abd Pie Izquierdo
+      #Transverse
+      pcRHPIE: Potencia de Rotación Cadera Derecha
+      pcLHPIE: Potencia de Rotación Cadera Izquierda
+      pcRKIE: Potencia de Rotación Rodilla Derecha
+      pcLKIE: Potencia de Rotación Rodilla Izquierda
+      pcRFIE: Potencia de Rotación Pie Derecho
+      pcLFIE: Potencia de Rotación Pie Izquierdo
