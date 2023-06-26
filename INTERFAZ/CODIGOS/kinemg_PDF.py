@@ -10,7 +10,7 @@ class PDF_MM(FPDF):
     def __init__(self, p_info, orientation, unit, format): # firstname, lastname, age, pathology, p_id
         super().__init__(orientation, unit, format)
         self.name= p_info[0][:-1]
-        print(self.name)
+
         self.age=p_info[1]
         self.pathgy=p_info[2]
         self.id = p_info[3]

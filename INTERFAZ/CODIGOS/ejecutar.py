@@ -51,16 +51,30 @@ def p_data():
     # firstname, lastname = split_name(p_name)
     
     try:
-        with open(nota, encoding='utf8') as f:
-            lines = f.read()
+        with open(nota,'r',encoding='utf-8') as f:
+                            # Lee el contenido del archivo
+              lines = f.read()
+              age = [int(s) for s in lines.split() if s.isdigit()][0]
+        
+        
+           
     except UnicodeDecodeError:
-        with open(nota, encoding='latin-1') as f:
-            lines = f.read()
-    finally:       
-        age = [int(s) for s in lines.split() if s.isdigit()][0]
-        for index, line in enumerate(lines.split()):
+        try:
+            with open(nota,'r',encoding='utf-16-le') as f:
+              # Lee el contenido del archivo
+              lines = f.read()
+              age = [int(s) for s in lines.split() if s.isdigit()][0]
             
-   
+        except:
+            with open(nota, encoding='latin-1') as f:
+              lines = f.read()
+              age = [int(s) for s in lines.split() if s.isdigit()][0]
+
+    finally:       
+ 
+        
+        for index, line in enumerate(lines.split()):
+           
             if line == 'DIAGNOSTICO:':
                 index_0 = index + 1
                
@@ -126,12 +140,12 @@ def p_data():
 
     return p_name, age, pathology, p_id, t_test, select
 
-def esatbilometria(comp,ant,new):
+def esatbilometria(comp,ant,new,path):
 
     global file_name,nfolder,nota,exam
     exam='estabilo'
 
-    folder=abrirArchivo() 
+    folder=path
     nfolder=os.path.split(folder)[1]
     nota=folder+'/NOTA.txt' 
 
@@ -166,21 +180,30 @@ def esatbilometria(comp,ant,new):
         if not comp:
             pdf.output(folder+f'/{patient_info[0]}_ESTABILOM.pdf')
             
+            
+            
         else: 
             pdf.output(folder+ f'/{patient_info[0]}_ESTABILOM_COMP.pdf')
+            
+            
   
     except PermissionError:
-        print('You have an open pdf with the same name')
+        pass
+
+    try:
+        pdf.output('resultados'+f'/{patient_info[0]}_ESTABILOM.pdf')
+    except:
+        pass
 
     
 
-def COP_EX(compara):
+def COP_EX(compara,path):
 
     global file_name, folder, nfolder, nota,exam
     exam='cop'  
 
 
-    folder=abrirArchivo()
+    folder=path
     nfolder=os.path.split(folder)[1]
     file_name = ' '.join(nfolder.split()[1:-1])
 
@@ -200,11 +223,9 @@ def COP_EX(compara):
         extraccion(c_name,0,''.join([folder,'\dc']))
     except:
         rutas_archivos_pdf = encontrar_archivos_pdf(folder)
-        print(rutas_archivos_pdf)
 
         extraccion(rutas_archivos_pdf[0],15,''.join([folder,'\ic']))
         extraccion(rutas_archivos_pdf[0],0,''.join([folder,'\dc']))
-        print(rutas_archivos_pdf)
 
     try:
         Ic=io.imread(''.join([folder,'\ic.jpg']))
@@ -212,7 +233,7 @@ def COP_EX(compara):
     except:
 
         dir_IZ=abrirArchivo2(folder,'SELECCIONE LA IMAGEN DEL PIE IZQUIERDO')
-        dir_DER=abrirArchivo2(folder,'SELECCIONE LA IMAGEN DEL PIE IZQUIERDO')
+        dir_DER=abrirArchivo2(folder,'SELECCIONE LA IMAGEN DEL PIE DERECHO')
         Ic=io.imread(dir_IZ)
         dc=io.imread(dir_DER)
 
@@ -250,19 +271,28 @@ def COP_EX(compara):
   
          pdf = PDFCOP(patient_info,datosI,datosD,comp,folder,dirs,'L', 'mm', 'A4')
          pdf.output(''.join([folder, f'/{patient_info[0]}_TrayectoriaCOMP.pdf']))
+         try:
+             pdf.output(''.join(['resultados', f'/{patient_info[0]}_TrayectoriaCOMP.pdf']))
+             
+         except:
+             pass
     else: 
    
         pdf = PDFCOP(patient_info,datosI,datosD,comp,folder,[0,0],'L', 'mm', 'A4')
         pdf.output(os.sep.join([folder, f'/{patient_info[0]}_COPTrayectoria.pdf']))
+        try:
+            pdf.output(os.sep.join(['resultados', f'/{patient_info[0]}_COPTrayectoria.pdf']))
+        except:
+            pass
         
 
 
         
-def sixmin6():
+def sixmin6(path):
     global file_name, nfolder, exam,nota
     exam='6min'
 
-    path=abrirArchivo()
+
 
 
     nota=path+'/NOTA.txt'
@@ -285,12 +315,12 @@ def sixmin6():
 
 
 
-def Kinematics():
+def Kinematics(path):
     global file_name,nfolder,nota,exam,folder
     exam='kinematics'
 
     
-    folder=abrirArchivo()
+    folder=path
   
     
     nfolder=os.path.split(folder)[1]
@@ -315,17 +345,21 @@ def Kinematics():
     if haveemg:
             pdf.pag5()
     pdf.output(os.sep.join([folder, f'/{p_info[0]}_ReporteMM.pdf']))
+    try:
+        pdf.output(os.sep.join(['resultados', f'/{p_info[0]}_ReporteMM.pdf']))
+    except:
+        pass
 
 
 
-    print('KINEMATICS EJECUTADO')
+ 
 
-def Variabilidad():
+def Variabilidad(path):
     global file_name, folder,nota,exam,nfolder
 
 
 
-    folder = abrirArchivo()
+    folder = path
     file_name = ' '.join(folder.split()[1:])
     nfolder=os.path.split(folder)[1]
     nota=folder+'/NOTA.txt'
@@ -343,14 +377,18 @@ def Variabilidad():
     
     pdf.output(folder+f'/{patient_info[0]}.pdf')
 
-def Tandem():
+    try:
+        pdf.output('resultados'+f'/{patient_info[0]}.pdf')
+    except:
+        pass
+
+def Tandem(path):
     global file_name, folder,nota,exam,nfolder
     exam='Tandem'
       
 
-    folder=abrirArchivo()
+    folder=path
   
-    print(os.path.split(folder))
 
     nota=folder+'/NOTA.txt'
     file_name = os.path.split(folder)[1]
@@ -360,11 +398,15 @@ def Tandem():
     c_name= str(''.join([folder, f'/pies.jpg']))
     inclinacion, tendencia=tandem(c_name,folder)
     pdf = Tandempdf(patient_info[0:4],inclinacion,tendencia,folder,'L', 'mm', 'A4')  
-    pdf.output(os.sep.join([folder, f'{patient_info[0]}_Tandem.pdf']))    
+    pdf.output(os.sep.join([folder, f'{patient_info[0]}_Tandem.pdf']))  
+    try:
+        pdf.output(os.sep.join(['resultados', f'{patient_info[0]}_Tandem.pdf']))  
+    except:
+        pass 
     
     
     
-    print( 'PACIENTE',(' '.join(patient_info[0].split()[:-1])[ :-1]),'finalizado' )
+
     
        
        

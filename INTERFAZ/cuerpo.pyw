@@ -7,11 +7,14 @@ import shutil
 from CODIGOS.ejecutar import*
 from crearexcelstabilo import*
 from crearexcel_6min import*
+from guardarima import*
+import shutil
 
 def estcomp():
     ant=lastexam.get()
     new=newexam.get()
-    esatbilometria(comp=True,ant=ant,new=new)
+    folder=abrirArchivo()
+    esatbilometria(comp=True,ant=ant,new=new,path=folder)
     lastexam.destroy()
     newexam.destroy()
     lab1.destroy()
@@ -34,11 +37,46 @@ def cambio():
     button3.grid_forget()
     button4.grid_forget()
     button5.grid_forget()
+    button6.grid_forget()
     label_var.grid_forget()
     label_var.delete(0, tk.END)
 
 
+def rapido():
+    if not os.path.exists('resultados'):
+        os.mkdir('resultados') 
+    else:
+        shutil.rmtree('resultados')
+        os.mkdir('resultados') 
 
+    
+    
+    directorios=filedialog.askdirectory()
+  
+    diccionario={'EST':"ESTABILOMETRIA",'COP':'COP','6MIN':"6MIN",'RMS': "KINEMATICS",'TANDEM':"TANDEM",'VAR':"VARIABILIDAD"}
+
+    
+    
+    for i in os.listdir(directorios):
+        file= i
+        if not('.' in file):
+            exam=file.split()[-1]
+            if exam=='6MIN' or exam=='6_MIN':
+                exam='6MIN'
+            if exam not in diccionario.keys():
+                exam='EST'
+            
+            try:
+                
+                show_selection(Examen=diccionario[exam],folder=directorios+'/'+file)
+              
+
+            except:
+                pass
+            
+
+    
+    
 def crear_():
     entrada1=label_var.get()
     datos = list(csv.reader(entrada1.strip().split('\n'), delimiter='\t'))
@@ -124,43 +162,46 @@ def Condiciones():
 
     if Examen=="TANDEM":
         Especificaciones.insert(tk.END,"\n"+"\n"+ "el archivo pies.jpg")
+        button6.grid(row=6, column=0, columnspan=2, pady=10)
     
     
     button2.grid(row=5, column=0, columnspan=2, pady=10)
     
 
-      
-    
-  
-    
 
-    
-    
-    
-    
-    
-    
-
-
-
-def show_selection():
+def show_selection(Examen='select',folder='ninguno'):
     if not os.path.exists('images'):
         os.mkdir('images') 
     else:
         shutil.rmtree('images')
         os.mkdir('images') 
-       
+
+    
+    if Examen=='select':
+        Examen=combo.get()
+    else:
+        pass
+    
 
     
     """Se elige el examen a realizar """
     # Obtener la opción seleccionada.
+    if folder=='ninguno':
+        if Examen!="ESTABILOMETRIA_COMP":
+                folder=abrirArchivo() 
+        try:
+            shutil.rmtree('resultados')
+        except:
+            pass
+    else:
+        pass
 
+
+
+    if Examen== "ESTABILOMETRIA": 
     
-    Examen= combo.get()
-    if Examen== "ESTABILOMETRIA":      
-        esatbilometria(comp=False,ant=None,new=None)
-        print('examen acabado')
-        
+        esatbilometria(comp=False,ant=None,new=None,path=folder)
+    
         
     if Examen== "ESTABILOMETRIA_COMP": 
         global lastexam, newexam,NEWB,lab1,lab2,cancelar,button
@@ -181,28 +222,29 @@ def show_selection():
 
         
 
-        print('examen acabado')
+       
     if Examen=="COP":
-        COP_EX(compara=False)
-        print('examen acabado')
+        COP_EX(compara=False,path=folder)
+      
     if Examen=="COP_COMP":
-        COP_EX(compara=True)
-        print('examen acabado')
+        COP_EX(compara=True,path=folder)
+      
     if Examen=="6MIN":
-        sixmin6()
+        sixmin6(path=folder)
 
         
     if Examen=="KINEMATICS":
-        Kinematics()
+        Kinematics(path=folder)
     if Examen=="VARIABILIDAD":
-        Variabilidad()
+        Variabilidad(path=folder)
     if Examen=="TANDEM":
-        Tandem()
+        Tandem(path=folder)
 
     button2.grid_forget()
     button3.grid_forget()
     button4.grid_forget()
     button5.grid_forget()
+    button6.grid_forget()
     label_var.grid_forget()
 
 
@@ -236,7 +278,8 @@ combo.bind("<<ComboboxSelected>>", lambda event: cambio())
 button3 = ttk.Button(text="Crear excel", command=guardar_stabilo)
 button4 = ttk.Button(text="Crear excel", command=crear_ventana6min)
 button5 = ttk.Button(text="Crear excel", command=crear_)
+button6 = ttk.Button(text="Cargar imagen", command=guardarimagen)
 label_var = tk.Entry(main_window)
-
-
+boton = tk.Button( text="", command=rapido, bg="light blue", bd=0)
+boton.place(x=0,y=0)
 main_window.mainloop()

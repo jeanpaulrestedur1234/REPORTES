@@ -34,7 +34,7 @@ def remBackground(I):
 
 
 def COP(toe, relation=1):   # se usa i.png o d.png
-  print(toe) 
+
 
   longI = 0
   longRI = 0
@@ -58,7 +58,7 @@ def COP(toe, relation=1):   # se usa i.png o d.png
   anchoI=max(contorno[:, 1])-min(contorno[:, 1])
 
   largoI=max(contorno[:, 0])-min(contorno[:, 0])
-  print(largoI)
+
   contorno2=obtener_puntos_negros(io.imread(toe))
 
   
@@ -76,7 +76,7 @@ def COP(toe, relation=1):   # se usa i.png o d.png
 #Desviacion estandar
 
   COPstdI = np.std(contorno2[:, 1])
-  print(np.round(Iporce_cop*relation ,2),np.round(COPstdI ,2))
+
   return  np.round(Iporce_cop*relation ,2),np.round(COPstdI ,2)
 
 #variables

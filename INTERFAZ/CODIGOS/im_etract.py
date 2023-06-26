@@ -9,7 +9,7 @@ def extraccion(name,num_im,pie_n):
      file=PyPDF2.PdfFileReader(open(name,"rb"))
      page0=file.pages[0]
      xObject=page0['/Resources']['/XObject'].getObject()
-     print()
+
 
      obj=str(list(xObject.keys())[num_im])
      if xObject [obj]['/Subtype'] == '/Image':

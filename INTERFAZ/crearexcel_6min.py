@@ -46,9 +46,31 @@ def crear_excel():
     # Aquí puedes agregar el código para crear el archivo de Excel
 def cargar_info():
     entrada1=recorridoinfo.get()
-    informacion = list(csv.reader(entrada1.strip().split('\n'), delimiter='\t'))
 
-    informacion[7:-2]=[[float(element) for element in row if element!=''] for row in informacion[7:-2]]
+    informacion = list(csv.reader(entrada1.strip().split('\n'), delimiter='\t'))
+    
+
+    conversion=[]
+    for row in informacion[7:-2]:
+        nrows=[]
+        for element in row:
+             try:
+                 nrows.append(float(element))
+             except:
+                 nrows.append((element))
+        
+        conversion.append(nrows)
+        
+    
+
+    informacion[7:-2]=conversion
+              
+            
+
+
+
+    
+
    
 
     datos.extend(informacion[:-2])
@@ -100,3 +122,4 @@ def crear_ventana6min():
 
     # Iniciar el bucle de eventos
     ventana.mainloop()
+

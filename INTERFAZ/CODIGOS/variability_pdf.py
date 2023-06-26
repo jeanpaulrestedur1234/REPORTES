@@ -25,7 +25,7 @@ class PDF_var(FPDF):
     def header(self):
         # Logo 
 
-        self.image('Vairabillityinfo/'+'images/roosevelt.png', 10, 3, 30)
+        self.image('roosevelt.png', 10, 3, 30)
 
         self.set_font('Helvetica', 'B', 10)
 
@@ -67,8 +67,8 @@ class PDF_var(FPDF):
         self.cell(100,53, border=True)
         self.cell(19)
         self.cell(100,53, border=True)
-        self.image('Vairabillityinfo/'+'images/stride_durstats.png', 30, 60, 95, 50)
-        self.image('Vairabillityinfo/'+'images/stride_lenstats.png', 150, 60, 95, 50)
+        self.image('images/stride_durstats.png', 30, 60, 95, 50)
+        self.image('images/stride_lenstats.png', 150, 60, 95, 50)
 
         # Black boxes around the tables
 
@@ -77,8 +77,8 @@ class PDF_var(FPDF):
         self.cell(100,53, border=True)
         self.cell(19)
         self.cell(100,53, border=True)
-        self.image('Vairabillityinfo/'+'images/stride_velstats.png', 30, 120, 95, 50)
-        self.image('Vairabillityinfo/'+'images/osc_timestats.png', 150, 120, 95, 50)
+        self.image('images/stride_velstats.png', 30, 120, 95, 50)
+        self.image('images/osc_timestats.png', 150, 120, 95, 50)
 
         # IDC and L_T
         
@@ -105,15 +105,15 @@ class PDF_var(FPDF):
         self.cell(100,53, border=True)
         self.cell(19)
         self.cell(100,53, border=True)
-        self.image('Vairabillityinfo/'+'images/step_durstats.png', 30, 60, 95, 50)
-        self.image('Vairabillityinfo/'+'images/stride_cadstats.png', 150, 60, 95, 50)
+        self.image('images/step_durstats.png', 30, 60, 95, 50)
+        self.image('images/stride_cadstats.png', 150, 60, 95, 50)
 
         # Black boxes around the tables
 
         self.ln(60)
         self.cell(78)
         self.cell(100,53, border=True)
-        self.image('Vairabillityinfo/'+'images/step_lenstats.png', 90, 120, 95, 50)
+        self.image('images/step_lenstats.png', 90, 120, 95, 50)
 
         
 
@@ -130,10 +130,10 @@ class PDF_var(FPDF):
         self.text(143, 50, table_title("stride_vel"))
         self.text(198, 50, table_title("osc_time"))
    
-        self.image('Vairabillityinfo/'+'images/stride_dur15s.png', 10, Y, x, y)
-        self.image('Vairabillityinfo/'+'images/stride_len15s.png', 78, Y,x, y)
-        self.image('Vairabillityinfo/'+'images/stride_vel15s.png', 141,Y, x, y)
-        self.image('Vairabillityinfo/'+'images/osc_time15s.png', 204, Y, x, y)
+        self.image('images/stride_dur15s.png', 10, Y, x, y)
+        self.image('images/stride_len15s.png', 78, Y,x, y)
+        self.image('images/stride_vel15s.png', 141,Y, x, y)
+        self.image('images/osc_time15s.png', 204, Y, x, y)
         self.ln(90)
 
         # The vector of cv average are in the same order of colnames in var_6min module
@@ -144,6 +144,6 @@ class PDF_var(FPDF):
         self.text(112, 120, table_title("stride_cad"))
         self.text(183, 120, table_title("step_len"))
 
-        self.image('Vairabillityinfo/'+'images/step_dur15s.png', 50, 125,  x, y)
-        self.image('Vairabillityinfo/'+'images/stride_cad15s.png', 115, 125,  x, y)
-        self.image('Vairabillityinfo/'+'images/step_len15s.png', 178,  125,  x, y)
+        self.image('images/step_dur15s.png', 50, 125,  x, y)
+        self.image('images/stride_cad15s.png', 115, 125,  x, y)
+        self.image('images/step_len15s.png', 178,  125,  x, y)

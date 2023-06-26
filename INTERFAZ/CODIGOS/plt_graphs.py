@@ -6,7 +6,7 @@ def plot_fig(x_label, y_label, filename, v_time, data1, data2=None, plot2sides =
     
 
 
- #   print(data1)
+
 
     diff=(np.array(data1[1:])-np.array(data1[:len(data1)-1]))/15
        

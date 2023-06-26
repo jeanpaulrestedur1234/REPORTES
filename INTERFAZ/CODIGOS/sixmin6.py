@@ -34,7 +34,7 @@ async def save_excel(df, path, folder, file_name):
     worksheet.set_column(0,0,25, wrap_format)
 
     writer.save()
-    print('¡Excel CREATED!')
+
 
 
 def findfolder():
@@ -73,7 +73,7 @@ def p_data(path, folder, file_name):
 
 def six_min_sensor(patient_info, path, folder, file_name):
     t0 = time.time()
-    print('Six_min')
+ 
     data_6min = six_min(patient_info[1], path+ folder)
 
     asyncio.run(save_excel(data_6min, path, folder, file_name))
@@ -85,17 +85,22 @@ def six_min_sensor(patient_info, path, folder, file_name):
 
     try:
         pdf.output(os.sep.join([path, folder, f'{file_name}_6 MIN CON SENSOR.pdf']),'F')
+        
     except PermissionError:
-        print('You have an open pdf with the same name')
+
         return
-    print(f'¡PDF1s CREATED! in {os.sep.join([path, folder])}')
-    print(f'time elapsed {time.time() - t0}')
+
+
+    try:
+        pdf.output(os.sep.join(['resultados', f'{file_name}_6 MIN CON SENSOR.pdf']),'F')
+    except:
+        pass
     
 
  
 def var_sixmin(patient_info, path, folder, file_name): 
     t0 = time.time()   
-    print('Varsix')
+
     idc, linear_tend, cv_avg = var_six(patient_info[1],path +folder)
 
     pdf = PDF_var(
@@ -109,11 +114,16 @@ def var_sixmin(patient_info, path, folder, file_name):
 
     try:
         pdf.output(os.sep.join([path, folder, f'{file_name}_VAR_6MIN.pdf']), 'F')
+        
     except PermissionError:
-        print('You have an open pdf with the same name')
+    
         return
-    print(f'¡PDF2s CREATED! in {os.sep.join([path, folder])}')
-    print(f'time elapsed {time.time() - t0}')
+
+
+    try:
+        pdf.output(os.sep.join(['resultados', f'{file_name}_VAR_6MIN.pdf']), 'F')
+    except:
+        pass
 
     
     

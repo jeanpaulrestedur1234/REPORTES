@@ -118,10 +118,10 @@ def variation(age,folder):
 
         
         fig=table_15s(np.transpose(tabla))
-        fig.write_image('Vairabillityinfo/'+'images/'+col+'15s.png' , scale=5)
+        fig.write_image('images/'+col+'15s.png' , scale=5)
         title = table_title(col)
         fig2= stats_table(df_stats.round(3), column_names()[col], control, title)
-        fig2.write_image('Vairabillityinfo/'+'images/' + col +'stats.png' , scale=5)
+        fig2.write_image('images/' + col +'stats.png' , scale=5)
         
     
         

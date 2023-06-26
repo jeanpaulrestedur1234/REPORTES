@@ -42,7 +42,9 @@ def read_data(comp=False, folder=str):
 
 def prepare_data(df):
     df.dropna(axis=0, thresh=3, inplace=True)
+
     df.columns = df.iloc[0,:]
+
     df = df[df != df.columns].dropna(axis=0, thresh = 5).reset_index(drop=True)
     return df
 
@@ -50,13 +52,18 @@ def prepare_data(df):
 def read_data6min(folder=str):
 
     general_data = pd.read_excel(folder + '/' +'Data_6Minutes.xlsx', sheet_name='Datos generales').dropna(thresh=2).drop(5).reset_index(drop=True)
-    section_data = pd.read_excel(folder + '/' +'Data_6Minutes.xlsx', sheet_name='Datos por tramo')
+    section_data =pd.DataFrame(pd.read_excel(folder + '/' +'Data_6Minutes.xlsx', sheet_name='Datos por tramo')
+) 
+
     
     # Saving sec_data in new sheet
-    
-    path = os.getcwd()   
+ 
     writer = pd.ExcelWriter(folder + '/' + 'Data_6Minutes.xlsx', engine = 'openpyxl', mode = 'a',  if_sheet_exists = 'replace')
     prepare_data(section_data).to_excel(writer, sheet_name = 'Datos Completos')
+    
+
+
+
     writer.save()
     return general_data, prepare_data(section_data)
 
@@ -96,7 +103,7 @@ def read_dataRMS(age: int, p_path: str, run_selected: int) -> tuple[pd.DataFrame
         'Frame', 'Time', 'Recto Femoral Derecho', 'Semitendinoso Derecho', 'Tibial anterior Derecho', 'Gastronemio Derecho', 
         'Recto Femoral Izquierdo', 'Semitendinoso Izquierdo', 'Tibial anterior Izquierdo', 'Gastronemio Izquierdo'
     ]
-    print(f'{p_path}{os.sep}{run_selected}')
+ 
 
     try:
         emg_data=extract_emg(f'{p_path}{os.sep}{run_selected}')
@@ -202,7 +209,6 @@ async def save_excel(age,six, selected_run,folder,file_name):
         # six_data_path = r'C:\\Users\\marcha\\Desktop\\PACIENTES\\PACIENTES VAR_6_MINS'
         p_folder_name = ' '.join(file_name.split()[:-1]) + ' 6_MIN'
         p_six_path = os.sep.join([six_data_path, p_folder_name, f'Data6_min_{s_name}.xlsx'])
-        print(p_six_path)
 
 
 
@@ -217,15 +223,17 @@ async def save_excel(age,six, selected_run,folder,file_name):
                 p_folder_name = name + ' 6MIN'
                 p_six_path = os.sep.join([six_data_path, p_folder_name, f'Data6_min_{s_name}.xlsx'])   
                 excel_book = openpyxl.load_workbook(p_six_path)
+                excel_book = add_new_sheet(excel_book, data_similarity, 'Similitud')
             except FileNotFoundError:
-                print('NO SE ENCONTRO EL LIBRO')
+            
                 excel_book = Workbook()
+                excel_book = add_new_sheet(excel_book, data_similarity, 'Similitud',addnew=False)
 
 
         # Create new sheets
 
 
-        excel_book = add_new_sheet(excel_book, data_similarity, 'Similitud') 
+        
         excel_filename = f'{p_path}{os.sep}Grafica&Data_6min_{s_name}.xlsx'
 
     elif six.lower() == 'no':
@@ -274,18 +282,45 @@ async def save_excel(age,six, selected_run,folder,file_name):
          sheet[''.join(['B',str(27+i)])]=''.join([str(round(analisis[i],2)),' %'])
          sheet[''.join(['B',str(27+i)])].alignment =  Alignment(horizontal='center', wrap_text=True)
     try:
-        statics=extract_static(f'{p_path}{os.sep}{select}')['track1d']
-        maxswing=[statics['MaxRswing'][0],statics['MaxLswing'][0]]
-        sheet['D27']="Altura maxima izquierdo (cm)"
-        sheet['D28']="Altura maxima Derecho (cm)"
-        sheet['E27']=maxswing[1]*100
-        sheet['E28']=maxswing[0]*100
+        swing= extract_maxminswing(f'{p_path}{os.sep}{select}')
+        valores = list(swing.values())
+        # Reordenar los valores en una lista plana
+        lista_ordenada = [valor for sublist in valores for valor in sublist]
+
+ 
+        sheet['D27'] = "izquierdo"
+        sheet['D32'] = "Derecho"
+        POSICIONES = [
+                "E28",
+           "E29",
+            "E30",
+            "E31", 
+            "E33",
+            "E34",
+            "E35", 
+            "E36", 
+        ]
+
+        for i in range(len(POSICIONES)):            
+            sheet[POSICIONES[i]] = lista_ordenada[i]
+        
+        for i in [0,5]:
+            sheet[f'D{28+i}'] = "Altura máxima primera mitad del balanceo (cm)"
+            sheet[f'D{28+i+1}'] = "Altura máxima segunda mitad del balanceo (cm)"
+            sheet[f'D{28+i+2}'] = "Altura mínima primera mitad del balanceo (cm)"
+            sheet[f'D{28+i+3}'] = "Altura mínima segunda mitad del balanceo (cm)"
+
     except:
         pass
  
 
 
     excel_book.save(excel_filename)
+
+    try:
+        excel_book.save(f'resultados/Graficas_{s_name}.xlsx')
+    except:
+        pass
   
  
 

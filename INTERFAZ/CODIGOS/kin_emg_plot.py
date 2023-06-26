@@ -223,7 +223,7 @@ def plt_cin(kin_data,dh_data,study, toe_off):
            
     plt.tight_layout()
     plt.savefig(os.sep.join(['images/', f'{study}.png']), dpi=200)
-    print(os.sep.join(['images/', f'{study}.png']))
+
     
 
 
@@ -250,7 +250,6 @@ def plt_emg(emg_data, t_stance, e_hs):
         axs[index, 1].plot(l_time, l_emg[msc_l], color='red')
         axs[index, 1].set_title(msc_l, loc = "center", fontdict = {'fontsize':12, 'fontweight':'bold', 'color':'black'})
         axs[index, 1].axvline(x= lts , ymin=-0.5, ymax=1,color = 'red')
-        # print(msc_l, msc_r)
 
 
 

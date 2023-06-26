@@ -204,3 +204,62 @@ def extract_static(name):
 
     return static
 
+
+def decoder(data):
+   lista= data.split()
+   datos=[]
+   salto=False
+   k=0
+   vector=[]
+   for i in lista:
+      if i=='S':
+         salto=True
+      else:
+         if salto:
+            salto=False
+         else:      
+            vector.append(float(i))
+            k=k+1
+            if k==3:   
+             datos.append(vector)           
+             vector=[]
+             k=0 
+
+   dat={'X':list(zip(*datos))[0],'Y':list(zip(*datos))[1],'Z':list(zip(*datos))[2]}
+   return pd.DataFrame(dat)
+
+
+def maximos_minimos(vector):
+    mitad = len(vector) // 2  # Obtener la mitad del vector
+    primera_mitad = vector[:mitad]  # Obtener la primera mitad del vector
+    segunda_mitad = vector[mitad:]  # Obtener la segunda mitad del vector
+    
+    max_primera_mitad = max(primera_mitad)  # Obtener el máximo de la primera mitad
+    max_segunda_mitad = max(segunda_mitad)  # Obtener el máximo de la segunda mitad
+
+    min_primera_mitad = min(primera_mitad)  # Obtener el máximo de la primera mitad
+    min_segunda_mitad = min(segunda_mitad)  # Obtener el máximo de la segunda mitad
+    
+    return max_primera_mitad, max_segunda_mitad, min_primera_mitad,min_segunda_mitad
+
+def extract_maxminswing(name):
+   tree = ET.parse(name)
+   root = tree.getroot()
+   element={}
+   for elem in root[0][0]:
+     if  elem.tag == 'track':
+       val=elem.attrib
+   
+       scale=val['scaleFactor']
+       if val['label']=='TrackRmet' or val['label']=='TrackLmet':
+
+          data=decoder(val['data']).Y
+          
+          data= data[int(len(data)*0.05):int(len(data)*0.95)]
+          element[val['label']]=np.array(maximos_minimos(data))/float(scale)*100
+
+
+          
+          
+   return element
+
